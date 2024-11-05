@@ -20,7 +20,8 @@ struct ContentView: View {
     @State private var currentFilter: CIFilter = CIFilter.sepiaTone()
     let context = CIContext()
     
-    @State private var showFilterSheet = false
+    @State private var showFilterSheet: Bool = false
+    @State private var filter: String = ""
     
     var body: some View {
         NavigationView {
@@ -53,8 +54,13 @@ struct ContentView: View {
                 .padding(.vertical)
                 
                 HStack {
-                    Button("Change filter") {
-                        showFilterSheet = true
+                    HStack {
+                        Button("Change filter: ") {
+                            showFilterSheet = true
+                        }
+                        
+                        Text("\(filter)")
+                            .font(.headline)
                     }
                     
                     Spacer()
@@ -71,13 +77,41 @@ struct ContentView: View {
                 ImagePicker(image: $inputImage)
             }
             .confirmationDialog("Select a filter", isPresented: $showFilterSheet) {
-                Button("Crystalize") { setFilter(CIFilter.crystallize()) }
-                Button("Eges") { setFilter(CIFilter.edges()) }
-                Button("Guassian Blur") { setFilter(CIFilter.gaussianBlur()) }
-                Button("Pixellate") { setFilter(CIFilter.pixellate()) }
-                Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
-                Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
-                Button("Vignette") { setFilter(CIFilter.vignette()) }
+                Button("Crystalize") {
+                    setFilter(CIFilter.crystallize())
+                    filter = "Crystalize"
+                }
+                
+                Button("Eges") {
+                    setFilter(CIFilter.edges())
+                    filter = "Eges"
+                }
+                
+                Button("Guassian Blur") {
+                    setFilter(CIFilter.gaussianBlur())
+                    filter = "Guassian Blur"
+                }
+                
+                Button("Pixellate") {
+                    setFilter(CIFilter.pixellate())
+                    filter = "Pixellate"
+                }
+                
+                Button("Sepia Tone") {
+                    setFilter(CIFilter.sepiaTone())
+                    filter = "Sepia Tone"
+                }
+                
+                Button("Unsharp Mask") {
+                    setFilter(CIFilter.unsharpMask())
+                    filter = "Unsharp Mask"
+                }
+                
+                Button("Vignette") {
+                    setFilter(CIFilter.vignette())
+                    filter = "Vignette"
+                }
+                
                 Button("Cancel", role: .cancel) { }
             }
         }
